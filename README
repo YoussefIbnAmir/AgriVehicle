@@ -4,4 +4,5 @@ This is the link to the GUI: https://agrivehicle-a3182.web.app/index.html
 The Arduino folder includet the code that gets the readings from the sensors to the Arduion Uno and then to the ESP.
 The ESP folder include the code that extract the readings from the Arduino code and send it to the ESP.
 The Data folder include the code that extracts the data from the firebase into the google sheet.
+This is a link to the data sheet: https://docs.google.com/spreadsheets/d/1Nk4EGiXWWhqRSa9L6yElP91rhSyEzYFk-aWTLemFFWU/edit?usp=sharing
 In HTML folder in the Websie folder, script file can be found in JavaScript. This file include the code that extracts the data from the google sheet into the website.
