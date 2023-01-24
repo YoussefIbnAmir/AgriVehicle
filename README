@@ -1,0 +1,7 @@
+The purpose of this research project is to reduce the effects of climate change on soil and plants and tackle the problem of desertification in Egypt. The project includes a car equipped with 4 sensors to measure the UV intensity, temperature, humidity, pH, and moisture of the soil. The data collected from the sensors is sent using Arduino and ESP to a real-time Firebase database and then to a Google sheet to save all the data. After that, it is sent to a GUI, where it gets visualized in graphs. Finally, it uses the data to generate maps of the affected areas and develop recommendations for farmers and other stakeholders on how to address the identified problems.
+This is the link to the GUI: https://agrivehicle-a3182.web.app/index.html
+
+The Arduino folder includet the code that gets the readings from the sensors to the Arduion Uno and then to the ESP.
+The ESP folder include the code that extract the readings from the Arduino code and send it to the ESP.
+The Data folder include the code that extracts the data from the firebase into the google sheet.
+In HTML folder in the Websie folder, script file can be found in JavaScript. This file include the code that extracts the data from the google sheet into the website.
