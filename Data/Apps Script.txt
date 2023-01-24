@@ -1,0 +1,91 @@
+// fire base url
+url="https://agrivehicle-a3182-default-rtdb.firebaseio.com/Agri-Vehicle.json?&auh=uz4ytYnl26ZI4Buwb1vrNfSljkuKBQUkAYOUsnms"
+
+
+function addProduct() {
+  var ss = SpreadsheetApp.openByUrl("https://docs.google.com/spreadsheets/d/1Nk4EGiXWWhqRSa9L6yElP91rhSyEzYFk-aWTLemFFWU/edit?usp=sharing");
+  var dataLoggerSheet = ss.getSheetByName("Datalogger");
+  
+
+  data = importData();
+  inde = data['inde'];
+  //var indeCounter = dataLoggerSheet.getRange("I" + dataLoggerSheet.getLastRow()).getValues();
+  //var indeRow = dataLoggerSheet.getRange("I" + dataLoggerSheet.getLastRow();
+  var indeCounter = dataLoggerSheet.getRange("I" + dataLoggerSheet.getLastRow()).getValues();
+  
+
+  if(indeCounter != inde ){
+    //dataLoggerSheet.getRange("A1").setValue(data['minutes']);
+      temperature = data['temperature'] ;
+      humidity = data['humidity'];
+      soil_moisture = data['soil_moisture'];
+      pH = data['soilpH'];
+      uV = data['uV'];
+      
+      
+      
+      
+      var dateTime = new Date();
+        var time = dateTime.toLocaleTimeString();
+        
+          // Get last edited row from DataLogger sheet
+          var row = dataLoggerSheet.getLastRow() +1;
+      
+          // Start Populating the data
+          dataLoggerSheet.getRange("A" + row).setValue(row); // ID
+          dataLoggerSheet.getRange("B" + row).setValue(dateTime); // dateTime
+          dataLoggerSheet.getRange("C" + row).setValue(time); // tag
+          dataLoggerSheet.getRange("D" + row).setValue(temperature); // temperature value
+          dataLoggerSheet.getRange("E" + row).setValue(humidity); // humidity value
+          dataLoggerSheet.getRange("F" + row).setValue(soil_moisture); // moisture value
+          dataLoggerSheet.getRange("G" + row).setValue(pH); // pH value
+          dataLoggerSheet.getRange("H" + row).setValue(uV); // uV value
+          dataLoggerSheet.getRange("I" + row).setValue(inde); // data index value
+          indeCounter = dataLoggerSheet.getRange("I" + dataLoggerSheet.getLastRow()).getValues();
+          dataLoggerSheet.getRange("J" + row).setValue(indeCounter); // data index value
+          
+  }
+}
+
+
+
+function importData(){
+  try{
+    // /rates/EUR
+    var res = UrlFetchApp.fetch(url);
+    var content = res.getContentText();
+    var json = JSON.parse(content);
+
+    Logger.log(json);
+
+    if(typeof(json) === "undefined"){
+      return "Node Not Available";}
+    else if(typeof(json) == "object") {
+      return json;
+    }
+  }
+  catch(err){
+     Logger.log(err)
+     // return "Error getting data";  
+  }
+ 
+}
+function doGet(){
+addProduct();
+var ss = SpreadsheetApp.openById("1Nk4EGiXWWhqRSa9L6yElP91rhSyEzYFk-aWTLemFFWU")
+var values = ss.getActiveSheet().getDataRange().getValues();
+var data= [];
+
+for (var i =1; i< values.length; i++) {
+  var row = values[i];
+  var feedback = {};
+  feedback['timee'] = row [2];
+  feedback['temperature'] = row[3];
+  feedback['humidity'] = row[4];
+  feedback ['soil_moisture'] = row [5];
+  feedback['soilpH']= row [6];
+  feedback['uV']=row [7];
+  data.push(feedback);
+}
+return ContentService.createTextOutput(JSON.stringify(data)).setMimeType(ContentService.MimeType.JSON);
+}
